@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infográfico: Matemática para Todos - Tendências e Impacto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 
+        Paleta de Cores Escolhida: "Energetic & Playful" (Exemplo)
+        Primária: #FF6B6B (Coral Vívido)
+        Secundária: #4ECDC4 (Verde Água)
+        Acento: #45B7D1 (Azul Brilhante)
+        Neutra Escura: #1A535C (Azul Petróleo Escuro)
+        Neutra Clara: #F7FFF7 (Branco Esverdeado)
+        Cor Gráfico 1: #FFD166 (Amarelo)
+        Cor Gráfico 2: #06D6A0 (Verde Esmeralda)
+
+        Confirmação:
+        - NENHUM Mermaid JS foi utilizado.
+        - NENHUM SVG foi utilizado. Diagramas e ícones são feitos com HTML/CSS/Unicode ou Chart.js (Canvas).
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F7FFF7; /* Neutra Clara */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Limite para legibilidade */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Altura base, pode ser ajustada com classes responsivas do Tailwind */
+            max-height: 400px; /* Altura máxima */
+        }
+        @media (min-width: 768px) { /* md */
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .stat-number {
+            font-size: 3rem; /* 48px */
+            font-weight: 700;
+            color: #FF6B6B; /* Primária */
+            line-height: 1;
+        }
+        .icon-placeholder { /* Para representar ícones sem usar SVG/imagens */
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 20px;
+            color: white;
+        }
+        .flowchart-step {
+            background-color: white;
+            border: 2px solid #4ECDC4; /* Secundária */
+            color: #1A535C; /* Neutra Escura */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            flex-grow: 1;
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #4ECDC4; /* Secundária */
+            margin: 0 0.5rem;
+            align-self: center;
+        }
+        .section-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700;
+            color: #1A535C; /* Neutra Escura */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-lg */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        .card-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600;
+            color: #FF6B6B; /* Primária */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <header class="bg-[#1A535C] text-white py-8 text-center">
+        <h1 class="text-4xl font-bold">Matemática para Todos: Transformando a Educação Infantil</h1>
+        <p class="text-xl mt-2">Uma Análise Detalhada do Projeto e Seu Potencial de Impacto</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <section class="mb-12 card">
+            <h2 class="section-title">O Cenário da Educação Matemática e a Iniciativa "Matemática para Todos"</h2>
+            <p class="text-lg text-center mb-6 text-gray-700">
+                O panorama da educação matemática no Brasil, especialmente nos anos iniciais, revela desafios significativos, com dificuldades conceituais e na aplicação de raciocínios lógicos. O projeto "Matemática para Todos" surge como uma proposta inovadora para promover o letramento matemático inclusivo na Educação Infantil, enfrentando essa realidade complexa.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="text-center">
+                    <div class="stat-number">50h</div>
+                    <p class="text-xl font-semibold text-[#1A535C]">Curso de Formação para Professores</p>
+                    <p class="text-gray-600">Capacitação intensiva para transformar práticas pedagógicas.</p>
+                </div>
+                <div class="chart-container mx-auto">
+                    <canvas id="eixosChart"></canvas>
+                </div>
+            </div>
+             <p class="mt-4 text-sm text-gray-600 text-center">O gráfico de rosca ilustra a divisão do projeto em quatro eixos estratégicos, cada um contribuindo para o objetivo geral de promover o letramento matemático inclusivo. A formação de professores é um pilar central, complementado por recursos inovadores, implementação de práticas e disseminação de conhecimento.</p>
+        </section>
+
+        <section class="mb-12 card">
+            <h2 class="section-title">Estratégias Centrais: Os Quatro Eixos do Projeto</h2>
+            <p class="text-lg text-center mb-8 text-gray-700">O projeto se estrutura em quatro eixos interconectados, cada um com foco em um aspecto crucial para a transformação da educação matemática na primeira infância.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#FF6B6B]">
+                    <div class="flex items-center mb-3">
+                        <span class="icon-placeholder bg-[#FF6B6B] mr-3">🎓</span>
+                        <h3 class="text-xl font-semibold text-[#1A535C]">Eixo 1: Formação Continuada</h3>
+                    </div>
+                    <p class="text-gray-600">Capacitação docente com curso de 50h e mentoria pedagógica individualizada para fortalecer as práticas em sala de aula.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#4ECDC4]">
+                    <div class="flex items-center mb-3">
+                        <span class="icon-placeholder bg-[#4ECDC4] mr-3">🛠️</span>
+                        <h3 class="text-xl font-semibold text-[#1A535C]">Eixo 2: Acessibilidade Cultura Maker</h3>
+                    </div>
+                    <p class="text-gray-600">Distribuição de Kits "Matemática para Todos" (Makey Makey, Scratch) e desenvolvimento de plataforma digital com recursos acessíveis.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#45B7D1]">
+                    <div class="flex items-center mb-3">
+                        <span class="icon-placeholder bg-[#45B7D1] mr-3">👩‍🏫</span>
+                        <h3 class="text-xl font-semibold text-[#1A535C]">Eixo 3: Implementação Pedagógica</h3>
+                    </div>
+                    <p class="text-gray-600">Diagnóstico inicial, implementação de práticas inovadoras, documentação pedagógica e culminância com compartilhamento de experiências.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#FFD166]">
+                    <div class="flex items-center mb-3">
+                        <span class="icon-placeholder bg-[#FFD166] mr-3">📚</span>
+                        <h3 class="text-xl font-semibold text-[#1A535C]">Eixo 4: Sistematização e Disseminação</h3>
+                    </div>
+                    <p class="text-gray-600">Publicação de artigo científico com fundamentação teórica, relatos de experiência e orientações para replicação do projeto.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 card">
+            <h2 class="section-title">Empoderando Educadores e Alunos: Ferramentas e Suporte</h2>
+            <p class="text-lg text-center mb-8 text-gray-700">O projeto oferece um conjunto robusto de ferramentas e suporte contínuo para professores e alunos, fomentando um ambiente de aprendizado matemático engajador e inclusivo.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="card-title text-center md:text-left">Para os Educadores:</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 pl-4">
+                        <li><span class="font-semibold text-[#1A535C]">Curso de Formação (50h):</span> Abordagem completa sobre letramento matemático, etnomatemática, gênero, acessibilidade, avaliação inclusiva e tecnologias.</li>
+                        <li><span class="font-semibold text-[#1A535C]">Mentoria Pedagógica Individualizada:</span> Observação de práticas, feedback construtivo e apoio na resolução de desafios.</li>
+                        <li><span class="font-semibold text-[#1A535C]">Plataforma Digital:</span> Acesso a banco de atividades, tutoriais Makey Makey e Scratch, e materiais de apoio.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="card-title text-center md:text-left">Para os Alunos:</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 pl-4">
+                        <li><span class="font-semibold text-[#1A535C]">Kit "Matemática para Todos":</span> Exploração prática com Makey Makey e Scratch para aprendizado lúdico.</li>
+                        <li><span class="font-semibold text-[#1A535C]">Caderno de Registro "Minha Aventura Matemática":</span> Design inclusivo para múltiplas formas de registro, valorizando diversas representações e com acesso a jogos online.</li>
+                        <li><span class="font-semibold text-[#1A535C]">Mascote da Turma:</span> Um elemento lúdico para engajamento.</li>
+                        <li><span class="font-semibold text-[#1A535C]">Vídeos Animados e Atividades Interativas:</span> Disponíveis na plataforma digital para complementar o aprendizado.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-12 card">
+            <h2 class="section-title">Integração Tecnológica e Recursos Digitais</h2>
+            <p class="text-lg text-center mb-6 text-gray-700">A tecnologia é um pilar fundamental do projeto, com foco na cultura maker e em recursos digitais acessíveis para enriquecer a experiência de aprendizagem.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="chart-container mx-auto">
+                    <canvas id="techIntegrationChart"></canvas>
+                </div>
+                <div class="bg-[#4ECDC4] bg-opacity-10 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold text-[#1A535C] mb-3">Plataforma Digital "Matemática para Todos"</h3>
+                    <p class="text-gray-700 mb-4">Uma ferramenta online central para o projeto (protótipo em <a href="https://matematica-para-todos.lovable.app/" target="_blank" class="text-[#FF6B6B] hover:underline">matematica-para-todos.lovable.app</a>), oferecendo:</p>
+                    <ul class="list-disc list-inside space-y-1 text-sm text-gray-600">
+                        <li>Vídeos animados de cada aula</li>
+                        <li>Banco de atividades por temas</li>
+                        <li>Áudios estilo podcast com comentários</li>
+                        <li>Opção de download de materiais (PDF/Word)</li>
+                        <li>Tutoriais de Makey Makey e Scratch</li>
+                    </ul>
+                    <p class="text-xs text-gray-500 mt-3">Obs: A plataforma está em desenvolvimento e os recursos estão sendo progressivamente adicionados.</p>
+                </div>
+            </div>
+            <p class="mt-4 text-sm text-gray-600 text-center">O gráfico de barras destaca os principais componentes tecnológicos do projeto. A Plataforma Digital serve como hub central, enquanto o Makey Makey e o Scratch promovem a aprendizagem mão na massa e o desenvolvimento do pensamento computacional, todos contribuindo para um letramento matemático inovador.</p>
+        </section>
+
+        <section class="mb-12 card">
+            <h2 class="section-title">Ciclo do Projeto e Impacto Esperado</h2>
+            <p class="text-lg text-center mb-8 text-gray-700">O "Matemática para Todos" segue um ciclo estruturado, desde o diagnóstico inicial até a disseminação dos resultados, visando um impacto duradouro na qualidade da educação matemática infantil.</p>
+            <div class="flex flex-col md:flex-row justify-around items-center space-y-4 md:space-y-0 md:space-x-2 overflow-x-auto pb-4">
+                <div class="flowchart-step">Diagnóstico Inicial</div>
+                <div class="flowchart-arrow hidden md:block">➔</div>
+                <div class="flowchart-step">Formação & Kit</div>
+                <div class="flowchart-arrow hidden md:block">➔</div>
+                <div class="flowchart-step">Implementação Pedagógica</div>
+                <div class="flowchart-arrow hidden md:block">➔</div>
+                <div class="flowchart-step">Documentação</div>
+                <div class="flowchart-arrow hidden md:block">➔</div>
+                <div class="flowchart-step">Culminância</div>
+                <div class="flowchart-arrow hidden md:block">➔</div>
+                <div class="flowchart-step">Publicação & Disseminação</div>
+            </div>
+            <p class="mt-6 text-center text-gray-700">
+                Este ciclo visa não apenas implementar práticas inovadoras, mas também criar um modelo replicável que possa inspirar transformações em outros contextos, promovendo um letramento matemático verdadeiramente inclusivo e significativo para todas as crianças.
+            </p>
+        </section>
+
+         <section class="card">
+            <h2 class="section-title">Alcance e Abrangência</h2>
+            <p class="text-lg text-center text-gray-700">
+                O projeto "Matemática para Todos" tem como público-alvo inicial todas as escolas municipais de Educação Infantil da cidade de Catanduva-SP, com o objetivo de alcançar um número significativo de professores e crianças, estabelecendo uma base sólida para a expansão futura e a replicação das práticas bem-sucedidas. A iniciativa busca criar um impacto sistêmico na qualidade do ensino de matemática desde os primeiros anos escolares.
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#1A535C] text-white py-6 text-center mt-12">
+        <p>&copy; 2025 Projeto Matemática para Todos. Infográfico gerado para análise de tendências.</p>
+    </footer>
+
+    <script>
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            if (typeof text === 'string') { // Se for uma string única, não precisa quebrar
+                context.fillText(text, x, y);
+                return;
+            }
+            // Se for um array de strings (já quebrado), renderiza cada linha
+            text.forEach((line, index) => {
+                context.fillText(line, x, y + (index * lineHeight));
+            });
+        }
+
+        function processLabel(label) {
+            const maxLength = 16;
+            if (typeof label === 'string' && label.length > maxLength) {
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxLength && currentLine.length > 0) {
+                        lines.push(currentLine.trim());
+                        currentLine = word + ' ';
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            }
+            return label; // Retorna original se não for string ou não precisar quebrar
+        }
+        
+        const tooltipTitleCallback = function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            } else {
+              return label;
+            }
+        };
+
+        // Gráfico de Eixos (Donut)
+        const eixosCtx = document.getElementById('eixosChart').getContext('2d');
+        const eixosLabels = ['Formação Continuada', 'Acessibilidade Cultura Maker', 'Implementação Pedagógica', 'Sistematização e Disseminação'].map(processLabel);
+        new Chart(eixosCtx, {
+            type: 'doughnut',
+            data: {
+                labels: eixosLabels,
+                datasets: [{
+                    label: 'Foco dos Eixos do Projeto',
+                    data: [30, 25, 25, 20], // Pesos exemplificativos
+                    backgroundColor: [
+                        '#FF6B6B', // Primária
+                        '#4ECDC4', // Secundária
+                        '#45B7D1', // Acento
+                        '#FFD166'  // Cor Gráfico 1
+                    ],
+                    borderColor: '#F7FFF7', // Neutra Clara (para bordas)
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 10 },
+                            boxWidth: 20,
+                             // Adicionando callback para renderizar rótulos multilinhas na legenda
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                if (data.labels.length && data.datasets.length) {
+                                    return data.labels.map(function(label, i) {
+                                        const meta = chart.getDatasetMeta(0);
+                                        const style = meta.controller.getStyle(i);
+                                        return {
+                                            text: Array.isArray(label) ? label.join(' ') : label, // Junta se for array
+                                            fillStyle: style.backgroundColor,
+                                            strokeStyle: style.borderColor,
+                                            lineWidth: style.borderWidth,
+                                            hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
+                                            index: i
+                                        };
+                                    });
+                                }
+                                return [];
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribuição Estratégica dos Eixos do Projeto',
+                        color: '#1A535C',
+                        font: { size: 14, weight: 'bold' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                           title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Integração Tecnológica (Bar)
+        const techCtx = document.getElementById('techIntegrationChart').getContext('2d');
+        const techLabels = ['Plataforma Digital', 'Makey Makey', 'Scratch'].map(processLabel);
+        new Chart(techCtx, {
+            type: 'bar',
+            data: {
+                labels: techLabels,
+                datasets: [{
+                    label: 'Componentes Tecnológicos Chave',
+                    data: [80, 65, 70], // Valores exemplificativos de "importância" ou "recursos alocados"
+                    backgroundColor: [
+                        '#FF6B6B', // Primária
+                        '#4ECDC4', // Secundária
+                        '#06D6A0'  // Cor Gráfico 2
+                    ],
+                    borderColor: [
+                        '#CC5555',
+                        '#3DAAAA',
+                        '#05B088'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y', // Barras horizontais para melhor leitura de rótulos longos
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { 
+                            display: true, 
+                            text: 'Nível de Integração/Recursos (Exemplificativo)',
+                            color: '#1A535C',
+                            font: { size: 10 }
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            font: { size: 10 },
+                            // Adicionando callback para renderizar rótulos multilinhas no eixo Y
+                            callback: function(value, index, values) {
+                                const label = this.getLabelForValue(value);
+                                return Array.isArray(label) ? label : processLabel(label); // Processa se não for array
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Pode ser desnecessário para um único dataset
+                    },
+                    title: {
+                        display: true,
+                        text: 'Foco na Integração de Tecnologias Educacionais',
+                        color: '#1A535C',
+                        font: { size: 14, weight: 'bold' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                           title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
